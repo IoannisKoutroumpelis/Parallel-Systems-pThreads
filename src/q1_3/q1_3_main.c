@@ -3,7 +3,6 @@
 #include <pthread.h>
 #include <sys/time.h>
 
-// Ορισμός της δομής (όπως δόθηκε στην εκφώνηση)
 struct array_stats_s {
     long long int info_array_0;
     long long int info_array_1;
@@ -11,8 +10,6 @@ struct array_stats_s {
     long long int info_array_3;
 };
 
-// Global μεταβλητές
-// Πλέον ορίζουμε δείκτη προς τη δομή, όχι στατικό αντικείμενο
 struct array_stats_s *array_stats_ptr;
 
 int *arrays[4];
@@ -28,11 +25,9 @@ void *thread_func(void *arg) {
     long id = (long)arg;
     int *my_array = arrays[id];
 
-    // Σάρωση του πίνακα και ενημέρωση μέσω του δείκτη
     for (int i = 0; i < N; i++) {
         if (my_array[i] != 0) {
             switch (id) {
-                // Χρήση του τελεστή '->' επειδή το array_stats_ptr είναι δείκτης
                 case 0: array_stats_ptr->info_array_0++; break;
                 case 1: array_stats_ptr->info_array_1++; break;
                 case 2: array_stats_ptr->info_array_2++; break;
@@ -54,22 +49,17 @@ int main(int argc, char *argv[]) {
 
     double t_start = get_time();
 
-    // --- ΔΥΝΑΜΙΚΗ ΔΕΣΜΕΥΣΗ ΚΑΙ ΑΡΧΙΚΟΠΟΙΗΣΗ STRUCT ---
-    
-    // 1. Δέσμευση μνήμης για τη δομή με malloc
     array_stats_ptr = (struct array_stats_s *)malloc(sizeof(struct array_stats_s));
     if (array_stats_ptr == NULL) {
         perror("Failed to allocate memory for stats struct");
         return 1;
     }
 
-    // 2. Αρχικοποίηση των πεδίων στο 0
     array_stats_ptr->info_array_0 = 0;
     array_stats_ptr->info_array_1 = 0;
     array_stats_ptr->info_array_2 = 0;
     array_stats_ptr->info_array_3 = 0;
 
-    // Δέσμευση και γέμισμα πινάκων δεδομένων
     for (int i = 0; i < 4; i++) {
         arrays[i] = (int *)malloc(N * sizeof(int));
         if (arrays[i] == NULL) {
@@ -84,7 +74,6 @@ int main(int argc, char *argv[]) {
     double t_init = get_time() - t_start;
     printf("Initialization Time: %.6f sec\n", t_init);
 
-    // --- Σειριακή Εκτέλεση (για επαλήθευση) ---
     long long s_res[4] = {0};
     t_start = get_time();
     for (int k = 0; k < 4; k++) {
@@ -96,7 +85,6 @@ int main(int argc, char *argv[]) {
     }
     printf("Serial Execution Time: %.6f sec\n", get_time() - t_start);
 
-    // --- Παράλληλη Εκτέλεση ---
     pthread_t threads[4];
     t_start = get_time();
     
@@ -113,9 +101,7 @@ int main(int argc, char *argv[]) {
     double t_parallel = get_time() - t_start;
     printf("Parallel Execution Time: %.6f sec\n", t_parallel);
 
-    // --- Επαλήθευση ---
     int correct = 1;
-    // Ελέγχουμε τις τιμές μέσω του δείκτη
     if (s_res[0] != array_stats_ptr->info_array_0) correct = 0;
     if (s_res[1] != array_stats_ptr->info_array_1) correct = 0;
     if (s_res[2] != array_stats_ptr->info_array_2) correct = 0;
@@ -133,12 +119,10 @@ int main(int argc, char *argv[]) {
                array_stats_ptr->info_array_3);
     }
 
-    // --- Αποδέσμευση Μνήμης ---
+
     for (int i = 0; i < 4; i++) {
         free(arrays[i]);
     }
-    
-    // Αποδέσμευση της δομής στατιστικών
     free(array_stats_ptr);
 
     return 0;
