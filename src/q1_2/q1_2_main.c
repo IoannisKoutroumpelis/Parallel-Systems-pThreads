@@ -1,8 +1,10 @@
+#define _XOPEN_SOURCE 600
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
 #include <sys/time.h>
 #include <time.h>
+#include <bits/pthreadtypes.h>
 
 pthread_mutex_t mlock;
 pthread_rwlock_t rwlock;

@@ -1,4 +1,4 @@
-#include "poly.h"
+#include "../../include/q1_1/poly.h"
 
 // Βοηθητική συνάρτηση για τη μέτρηση του χρόνου
 double now_sec() {
