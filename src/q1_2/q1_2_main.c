@@ -38,6 +38,7 @@ void *thread_loop(void *arg){
             __atomic_fetch_add(&var, 1, __ATOMIC_SEQ_CST);
         }
     }
+    return NULL;
 }
 
 int main(int argc, char **argv) {

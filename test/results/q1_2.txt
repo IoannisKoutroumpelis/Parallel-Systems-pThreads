@@ -1,0 +1,13 @@
+Threads Impl Time
+1 Atomic 0.001334
+1 Mutex 0.004045
+1 RWLock 0.006513
+2 Atomic 0.008797
+2 Mutex 0.030226
+2 RWLock 0.064476
+4 Atomic 0.020458
+4 Mutex 0.056313
+4 RWLock 0.162772
+8 Atomic 0.040880
+8 Mutex 0.179720
+8 RWLock 0.369563

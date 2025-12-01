@@ -1,0 +1,17 @@
+ReadPerc Strategy Time
+0 CoarseMutex 0.0224
+0 CoarseRW 0.0415
+0 FineMutex 0.0066
+0 FineRW 0.0074
+50 CoarseMutex 0.0184
+50 CoarseRW 0.0378
+50 FineMutex 0.0048
+50 FineRW 0.0058
+90 CoarseMutex 0.0145
+90 CoarseRW 0.0409
+90 FineMutex 0.0027
+90 FineRW 0.0037
+100 CoarseMutex 0.0125
+100 CoarseRW 0.0196
+100 FineMutex 0.0027
+100 FineRW 0.0031

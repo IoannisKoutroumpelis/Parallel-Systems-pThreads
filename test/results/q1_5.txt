@@ -1,0 +1,10 @@
+Threads Barrier Time
+2 Pthread 0.597278
+2 CondVar 0.596082
+2 SenseRev 0.048282
+4 Pthread 0.754451
+4 CondVar 0.954533
+4 SenseRev 0.353355
+8 Pthread 1.250396
+8 CondVar 1.767510
+8 SenseRev 1.222404

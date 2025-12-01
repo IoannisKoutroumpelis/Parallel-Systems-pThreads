@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <sys/time.h>
+#include <time.h> // Added for time()
 
 struct array_stats_s {
     long long int info_array_0;
@@ -46,6 +47,9 @@ int main(int argc, char *argv[]) {
 
     N = atoi(argv[1]);
     printf("Array size per thread: %d\n", N);
+
+    // Initialize random seed
+    srand(time(NULL));
 
     double t_start = get_time();
 
